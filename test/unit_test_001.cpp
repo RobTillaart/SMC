@@ -101,9 +101,8 @@ unittest(test_getter_setter)
   assertEqualFloat(smc.getSetPoint(), 75, 0.01);
   smc.setMaxValue(102);
   assertEqualFloat(smc.getMaxValue(), 102, 0.01);
-  smc.setWeight1(0.25);
+  smc.setWeights(0.25, 3.14);
   assertEqualFloat(smc.getWeight1(), 0.25, 0.01);
-  smc.setWeight2(3.14);
   assertEqualFloat(smc.getWeight2(), 3.14, 0.01);
 }
 
