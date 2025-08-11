@@ -73,10 +73,16 @@ E-book Josef Bernhardt
 
 - **SMC()** constructor
 - **void begin(float setPoint, float maxValue, float weight1, float weight2)** 
-Sets the initial setPoint, the level of the control signal, 
-and the two constants Weight1 and Weight2.
+Sets the initial values for 
+  - setPoint, the target one wants to reach (e.g. temperature)
+  - the maximum level of the control signal, (e.g. heater)
+  - weight1 == weight for the error between setPoint and measured value (1st order).
+  - weight2 == weight for the delta error compared to previous error (2nd order).
+
 The function **begin()** can be called multiple times with different parameters 
 to adjust all settings at once.
+There also exist functions to set and get these parameters on an individual basis.
+See getters and setters below.
 
 
 ### Control
@@ -91,14 +97,16 @@ This function needs to be called in a (tight) loop.
 
 ### Mode
 
--**void setMode(uint8_t mode)** set the control mode, see table below.
--**uint8_t getMode()** returns current mode (0, 1)
+- **void setMode(uint8_t mode)** set the control mode, see table below.
+- **uint8_t getMode()** returns current mode (0, 1)
 
 |  mode  |  define           |  description  |
 |:------:|:------------------|:--------------|
 |   0    |  SMC_LINEAR       |  ON/OFF based on 1st and 2nd order error (default)
 |   1    |  SMC_EXPONENTIAL  |  Continuous 0..100%
-|   2    |  SMC_SIMPLE       |  ON/OFF based on 1st order error.
+|   2    |  SMC_SIMPLE       |  ON/OFF only based on 1st order error (no weight)
+
+Note: the SMC_SIMPLE is not discussed in the book.
 
 
 ### Getters and Setters
@@ -133,7 +141,7 @@ This might help to bring over- and undershoot a bit in balance.
 #### Must
 
 - improve documentation
-- create test setup (e.g. DHT22 fan control)
+- build a test setup (e.g. DHT22 fan control)
 
 #### Should
 
@@ -144,6 +152,7 @@ This might help to bring over- and undershoot a bit in balance.
   - bool begin() too?
 - need normal (heater) / inverted (cooler) flag  (100 - percentage)
   - could this also be done with negative weights?
+  - SIMPLE does not use weights. (use sign??)
 
 #### Could
 

@@ -49,10 +49,11 @@ public:
     //  SIMPLE mode doesn't need delta error.
     if (_mode == SMC_SIMPLE)
     {
-      if (_error >= 0) return 100;
+      // (_weight1 < 0) error = -error???
+      if (_error >= 0) return 100.0;
       //  to investigate "cooling" ?
       //  if .... return -100;
-      return 0;
+      return 0.0;
     }
 
     //  LINEAR and EXPONENTIAL need delta error.
@@ -61,14 +62,14 @@ public:
     float s = (_weight1 * _error) + (_weight2 * delta);
     if (_mode == SMC_LINEAR)
     {
-      if (s > 0) return 100;
+      if (s > 0) return 100.0;
       //  to investigate "cooling" ?
       //  if .... return -100;
-      return 0;
+      return 0.0;
     }
     if (_mode == SMC_EXPONENTIAL)
     {
-      float rv = 100 * (1.0 / (1.0 + exp(-s)));
+      float rv = 100.0 * (1.0 / (1.0 + exp(-s)));
       // if (rv >= 100.0) return 100.0;
       // if (rv <= 0.0)   return 0;
       return rv;
