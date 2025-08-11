@@ -53,10 +53,58 @@ unittest(test_constructor)
 
   fprintf(stderr, "defaults\n");
   assertEqual(smc.getMode(), 0);
-  assertEqual(smc.getSetPoint(), 0);
-  assertEqual(smc.getMaxValue(), 0);
-  assertEqual(smc.getWeight1(), 0);
-  assertEqual(smc.getWeight2(), 0);
+  assertEqualFloat(smc.getSetPoint(), 0, 0.01);
+  assertEqualFloat(smc.getMaxValue(), 0, 0.01);
+  assertEqualFloat(smc.getWeight1(), 0, 0.01);
+  assertEqualFloat(smc.getWeight2(), 0, 0.01);
+  
+  smc.begin(50, 255, 0.5, 1.0);
+  assertEqual(smc.getMode(), 0);
+  assertEqualFloat(smc.getSetPoint(), 50, 0.01);
+  assertEqualFloat(smc.getMaxValue(), 255, 0.01);
+  assertEqualFloat(smc.getWeight1(), 0.5, 0.01);
+  assertEqualFloat(smc.getWeight2(), 1.0, 0.01);
+}
+
+
+unittest(test_mode)
+{
+  SMC smc;
+
+  assertEqual(smc.getMode(), 0);
+  smc.setMode(SMC_EXPONENTIAL);
+  assertEqual(smc.getMode(), 1);
+  smc.setMode(SMC_SIMPLE);
+  assertEqual(smc.getMode(), 2);
+  smc.setMode(SMC_LINEAR);
+  assertEqual(smc.getMode(), 0);
+}
+
+
+unittest(test_outValuePercentage)
+{
+  SMC smc;
+
+  smc.begin(50, 255, 0.5, 1.0);
+
+  assertEqualFloat(smc.outValuePercentage(25), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(50), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(51),   0, 0.01);
+}
+
+
+unittest(test_getter_setter)
+{
+  SMC smc;
+
+  smc.setSetPoint(75);
+  assertEqualFloat(smc.getSetPoint(), 75, 0.01);
+  smc.setMaxValue(102);
+  assertEqualFloat(smc.getMaxValue(), 102, 0.01);
+  smc.setWeight1(0.25);
+  assertEqualFloat(smc.getWeight1(), 0.25, 0.01);
+  smc.setWeight2(3.14);
+  assertEqualFloat(smc.getWeight2(), 3.14, 0.01);
 }
 
 
