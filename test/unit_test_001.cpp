@@ -54,9 +54,9 @@ unittest(test_constructor)
   fprintf(stderr, "defaults\n");
   assertEqual(smc.getMode(), 0);
   assertEqual(smc.getSetPoint(), 0);
-  assertEqual(smc.getOutValue(), 0);
-  assertEqual(smc.getW1(), 0);
-  assertEqual(smc.getW2(), 0);
+  assertEqual(smc.getMaxValue(), 0);
+  assertEqual(smc.getWeight1(), 0);
+  assertEqual(smc.getWeight2(), 0);
 }
 
 
