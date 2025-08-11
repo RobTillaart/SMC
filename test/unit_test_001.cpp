@@ -87,8 +87,20 @@ unittest(test_outValuePercentage)
 
   smc.begin(50, 255, 0.5, 1.0);
 
+  smc.setMode(SMC_SIMPLE);
   assertEqualFloat(smc.outValuePercentage(25), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(46), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(47), 100, 0.01);
   assertEqualFloat(smc.outValuePercentage(48), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(49), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(50), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(51),   0, 0.01);
+
+  smc.setMode(SMC_LINEAR);
+  assertEqualFloat(smc.outValuePercentage(25), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(46), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(47), 100, 0.01);
+  assertEqualFloat(smc.outValuePercentage(48),   0, 0.01);
   assertEqualFloat(smc.outValuePercentage(49),   0, 0.01);
   assertEqualFloat(smc.outValuePercentage(50),   0, 0.01);
   assertEqualFloat(smc.outValuePercentage(51),   0, 0.01);
